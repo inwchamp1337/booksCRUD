@@ -1,0 +1,211 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server for managing books.",
+        "title": "Book API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {
+        "/books": {
+            "get": {
+                "description": "get all books",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get all books",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/main.Book"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "add by json book",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "books"
+                ],
+                "summary": "Create a new book",
+                "parameters": [
+                    {
+                        "description": "Add book",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    }
+                }
+            }
+        },
+        "/books/{id}": {
+            "get": {
+                "description": "Get a single book by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get book by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a book by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "books"
+                ],
+                "summary": "Update a book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update book",
+                        "name": "book",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/main.Book"
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a book by ID",
+                "tags": [
+                    "books"
+                ],
+                "summary": "Delete a book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Book ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "main.Author": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "main.Book": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "$ref": "#/definitions/main.Author"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "isbn": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

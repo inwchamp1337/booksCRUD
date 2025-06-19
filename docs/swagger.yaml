@@ -1,0 +1,139 @@
+basePath: /
+definitions:
+  main.Author:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  main.Book:
+    properties:
+      author:
+        $ref: '#/definitions/main.Author'
+      id:
+        type: integer
+      isbn:
+        type: string
+      title:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a sample server for managing books.
+  title: Book API
+  version: "1.0"
+paths:
+  /books:
+    get:
+      description: get all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Book'
+            type: array
+      summary: Get all books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: add by json book
+      parameters:
+      - description: Add book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/main.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Book'
+      summary: Create a new book
+      tags:
+      - books
+  /books/{id}:
+    delete:
+      description: Delete a book by ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: string
+        "404":
+          description: Book not found
+          schema:
+            type: string
+      summary: Delete a book
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Get a single book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Book'
+        "404":
+          description: Book not found
+          schema:
+            type: string
+      summary: Get book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update a book by ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/main.Book'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Book'
+        "404":
+          description: Book not found
+          schema:
+            type: string
+      summary: Update a book
+      tags:
+      - books
+swagger: "2.0"
